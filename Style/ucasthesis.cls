@@ -559,6 +559,7 @@
     \def\contentsname{\ucas@label@en@tocname}
     \def\listfigurename{\ucas@label@en@lsfigname}
     \def\listtablename{\ucas@label@en@lstabname}
+    \def\listfiguretablename{\ucas@label@en@lsfigtabname}
     \def\bibname{\ucas@label@en@bibname}
     \def\refname{\ucas@label@en@bibname}
     \def\algname{\ucas@label@en@algname}
@@ -581,6 +582,7 @@
     \def\contentsname{\ucas@label@ch@tocname}
     \def\listfigurename{\ucas@label@ch@lsfigname}
     \def\listtablename{\ucas@label@ch@lstabname}
+    \def\listfiguretablename{\ucas@label@ch@lsfigtabname}
     \def\algname{\ucas@label@ch@algname}
     \def\bibname{\ucas@label@ch@bibname}
     \def\refname{\ucas@label@ch@bibname}
@@ -651,8 +653,23 @@
 \ctexset {
     appendix = {
         %numbering = true|false,
-        %number = \rmfamily\Alph{chapter},
+        number = \rmfamily\chinese{chapter},
     }
+}
+% additional settings for appendix
+\let\oldappendix\appendix
+\renewcommand\appendix{
+    \oldappendix % origin appendix
+    \renewcommand\thechapter{\arabic{chapter}} % still in arabic number,not Alph
+    \ctexset{ % set name with appendix
+        figurename={附图},
+        tablename={附表},
+        section={name={附}},
+        subsection={name={附}},
+    }
+    \captionsetup[figure][bi-second]{name=App Figure} % set bicaption name
+    \captionsetup[table][bi-second]{name=App Table}
+    \renewcommand\theequation{附\arabic{chapter}-\arabic{equation}} % set equation name
 }
 %---------------------------------------------------------------------------%
 %->> Configure table of contents
